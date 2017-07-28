@@ -1,5 +1,12 @@
 <?php
-
+/*
+Plugin Name: Curso WP Plugin Likes
+Plugin URI: 
+Description: Teste de plugin
+Author: Jimmy Cliff
+Version: 1.6
+Tested up to: 
+*/
 
 class CursoWPLikes {
 
