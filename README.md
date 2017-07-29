@@ -37,6 +37,6 @@ Para quem ainda é novo no Github, vale ver esse post sobre como fazer Fork, Pul
 ### O mais legal
 
 * Criar um post type novo e:
-** aplicar essa funcionalidade de curtir apenas a esse post type
-** Fazer a listagem deste post type ser ordenada por mais curtidos
-** Opcional: Criar um template no seu tema para listagem desse post type
+  * aplicar essa funcionalidade de curtir apenas a esse post type
+  * Fazer a listagem deste post type ser ordenada por mais curtidos
+  * Opcional: Criar um template no seu tema para listagem desse post type
