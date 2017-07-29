@@ -1,11 +1,9 @@
 <?php
 /**
  * 
- * 
- * 
- * 
- * 
- * 
+ * Não está funcionando, porque o Google agora pede chave para API, 
+ * mas serve como exemplo de um metabox mais elaborado, e com uma função para ser usado "Loop" do WP 
+ * para exibição dos dados o front end.
  * 
  */ 
 

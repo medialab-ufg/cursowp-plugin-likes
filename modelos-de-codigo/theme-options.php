@@ -1,8 +1,9 @@
 <?php
 /**
+ * Exemplo de criação de uma página de configuração no administrador do WP.
  * 
- * 
- * 
+ * Este exemplo usa parcialmente a Settings API, registrando apenas uma "setting" e 
+ * criando todo o formuáario por conta própria, sem utilizar as funções para criar `sections`e `settings fields`.
  * 
  */
  
@@ -65,7 +66,15 @@ function theme_options_page_callback_function() {
 ?>
   <div class="wrap span-20">
     <h2><?php echo __('Theme Options', 'SLUG'); ?></h2>
-
+    
+    
+    <?php
+    /**
+     * Como registramos nossa settings usando a função register_setting()
+     * podemos submeter nosso formulário para options.php
+     * e não precisamos nos preocupar com a parte de salvamento no banco
+     */
+    ?>
     <form action="options.php" method="post" class="clear prepend-top">
       <?php settings_fields('theme_options_options'); ?>
       <?php $options = wp_parse_args( get_option('theme_options'), get_theme_default_options() );?>

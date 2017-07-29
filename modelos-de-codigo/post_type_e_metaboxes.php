@@ -1,4 +1,7 @@
 <?php
+/**
+ * Exemplo de registro de post type com vários tipos de metados podendo ser acrescentados a ele.
+ */ 
 
 // Dê um Find Replace (CASE SENSITIVE!) em _POST_TYPE_ pelo nome do seu post type 
 

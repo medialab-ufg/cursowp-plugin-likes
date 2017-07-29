@@ -1,4 +1,11 @@
 <?php
+/**
+ * 
+ * Metaboxes são caixas que podem ser adicionadas nas páginas de edições de posts, normalmente usados como interface de inserção de metadados.
+ * 
+ * São alternativas a interface genérica do WordPress de edição de metadados. (Dica: se seu metadado começar com um "_" ele não aparecerá na interface generica do WP).
+ */
+
 
 // SUBSTITUA  _SLUG_ pelo slug do metabox
 
@@ -8,7 +15,7 @@ class _SLUG_Metabox {
         '_SLUG_', // slug do metabox
         'Título do metabox _SLUG_', // título do metabox
         'post', // array('post','page','etc'), // post types
-        'side' // onde colocar o metabox
+        'side' // onde colocar o metabox: normal, side ou advanced
     );
 
     static function init() {
