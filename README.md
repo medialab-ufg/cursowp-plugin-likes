@@ -13,7 +13,7 @@ Ele mostra, na prática, a utilização de alguns recursos do WordPress, como:
 
 (Nota: Este plugin tem find didáticos apenas, não foi feito para ser usado em produção e nem está pronto pra isso)
 
-Este repositório também traz [outros exemplos](modelos-de-codigo) de código com funções úteis no desenvolvimento WordPress. Eles estão na pasta (modelos-de-codigo).
+Este repositório também traz [outros exemplos](modelos-de-codigo) de código com funções úteis no desenvolvimento WordPress. Eles estão na pasta [modelos-de-codigo](modelos-de-codigo).
 
 ## Desafios
 
