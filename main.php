@@ -16,6 +16,7 @@ class CursoWPLikes {
     add_action('wp_ajax_cursowp_like', array(&$this, 'POST_vote'));
     add_action('wp_ajax_cursowp_unlike', array(&$this, 'POST_unvote'));
     add_action('admin_init', array(&$this, 'register_settings'));
+    add_action('wp_enqueue_scripts', array(&$this, 'print_styles'));
   }
 
   function print_scripts() {
@@ -27,6 +28,11 @@ class CursoWPLikes {
                                                              'mensagem1' => __('Pages')
                                                              )
     );
+  }
+
+  function print_styles() {
+    wp_register_style( 'cursowp_like', plugin_dir_url( __FILE__ ) . 'assets/css/style.css' );
+    wp_enqueue_style( 'cursowp_like' );
   }
 
   function the_content($content) {
@@ -46,27 +52,31 @@ class CursoWPLikes {
 
     $current_user = wp_get_current_user();
 
+    $author = get_post_field('post_author', get_the_ID());
+
+    if ($current_user->ID == $author) {
+      $isPostAuthor = 1;
+    } else {
+      $isPostAuthor = 0;
+    }
+
     $likes = get_post_meta($post_id, '_user_like');
     $totalLikes = is_array($likes) ? sizeof($likes) : 0;
     $jaCurtiu = is_array($likes) ? in_array($current_user->ID, $likes) : false;
 
-    $is_post_author = (get_post_field('post_author', get_the_ID()) == get_current_user_id()) ? true : false;
-
-    if (is_user_logged_in() && $is_post_author)  {
+    if ($isPostAuthor == 0) {
       if (!$jaCurtiu) {
-        $html = "<span class='cursowp_like' data-post_id='{$post_id}' >Curtir</span>";
+        $html = "<span class='cursowp_like' data-post_id='{$post_id}'>Curtir</span> | ";
       } else {
-        $html = "<span class='cursowp_unlike' data-post_id='{$post_id}' >Descurtir</span>";
+        $html = "<span class='cursowp_unlike' data-post_id='{$post_id}'>Descurtir</span> | ";
       }
     } else {
-      $html = '';
+      $html = "";
     }
-
-
 
     $s = $totalLikes != 1 ? 's' : '';
 
-    $html .= " | <span class='cursowp_like_count' data-post_id='{$post_id}' >$totalLikes curtida$s</span>";
+    $html .= "<span class='cursowp_like_count' data-post_id='{$post_id}' >$totalLikes curtida$s</span>";
 
     $html = "<div class='cursowp_like_wrapper' id='cursowp_like_{$post_id}'>$html<hr/></div>";
 
@@ -75,7 +85,6 @@ class CursoWPLikes {
   }
 
   function POST_vote() {
-
     if (is_user_logged_in()) {
       $current_user = wp_get_current_user();
       if (is_numeric($_POST['post_id'])) {
@@ -85,13 +94,10 @@ class CursoWPLikes {
         echo 'erro';
       }
     }
-
     die;
-
   }
 
   function POST_unvote() {
-
     if (is_user_logged_in()) {
       $current_user = wp_get_current_user();
       if (is_numeric($_POST['post_id'])) {
@@ -101,9 +107,7 @@ class CursoWPLikes {
         echo 'erro';
       }
     }
-
     die;
-
   }
 
 
