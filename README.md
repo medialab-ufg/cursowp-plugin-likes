@@ -26,8 +26,8 @@ Para quem ainda é novo no Github, vale ver esse post sobre como fazer Fork, Pul
 
 ### Fáceis
 
-~~Adicionar a possibilidade de Descurtir~~
-~~Não permitir curtir os próprios posts~~
+* ~~Adicionar a possibilidade de Descurtir~~
+* ~~Não permitir curtir os próprios posts~~
 
 ### Médios
 
