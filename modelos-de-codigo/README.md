@@ -40,3 +40,11 @@ Exemplo de criação de uma página de configuração no administrador do WP.
 
 Este exemplo usa parcialmente a Settings API, registrando apenas uma "setting" e criando todo o formuáario por conta própria, sem utilizar as funções para criar `sections`e `settings fields`.
 
+## shortcode.php
+
+Exemplo de criação de shortcodes
+
+Um deles pega o conteúdo que vem dentro do shortcode entre [colunas] e [/colunas].
+
+O segundo mostra como receber parametros no shortcode, por exemplo: [embed largura=200]
+
