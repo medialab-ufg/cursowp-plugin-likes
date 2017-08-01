@@ -61,7 +61,7 @@ class CursoWPLikes {
         if (!$jaCurtiu) {
             $html = "<span class='cursowp_like' data-post_id='{$post_id}' >Curtir</span>";
         } else {
-            $html = "<span  >Já curtiu</span>";
+            $html = "<span class='cursowp_like' data-post_id='{$post_id}' >Descurtir</span>";
         }
         
         $s = $totalLikes != 1 ? 's' : '';
