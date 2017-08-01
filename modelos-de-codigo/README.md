@@ -48,3 +48,11 @@ Um deles pega o conteúdo que vem dentro do shortcode entre [colunas] e [/coluna
 
 O segundo mostra como receber parametros no shortcode, por exemplo: [embed largura=200]
 
+## pre_get_posts.php
+
+Exemplo de uso do action pre_get_posts para mudar o comportamento de listagens do WP
+
+## loop-personalizado.php
+
+Exemplo de Criação de um Loop personalizado dentro de um template qualquer do seu tema
+
