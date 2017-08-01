@@ -10,6 +10,7 @@ Tested up to:
 
 class CursoWPLikes {
 
+
   function __construct() {
     add_action('wp_print_scripts', array(&$this, 'print_scripts'));
     add_filter('the_content', array(&$this, 'the_content'));
@@ -61,22 +62,30 @@ class CursoWPLikes {
     }
 
     $likes = get_post_meta($post_id, '_user_like');
+    $likeOptions = get_post_meta($post_id, '_can_like_checkbox');
+    $podeCurtir = is_array($likeOptions) ? in_array('true', $likeOptions) : false;
     $totalLikes = is_array($likes) ? sizeof($likes) : 0;
     $jaCurtiu = is_array($likes) ? in_array($current_user->ID, $likes) : false;
 
-    if ($isPostAuthor == 0) {
+    if ($isPostAuthor == 0 && $podeCurtir == true) {
       if (!$jaCurtiu) {
         $html = "<span class='cursowp_like' data-post_id='{$post_id}'>Curtir</span> | ";
       } else {
         $html = "<span class='cursowp_unlike' data-post_id='{$post_id}'>Descurtir</span> | ";
       }
+    } elseif($isPostAuthor == 1 && $podeCurtir != true) {
+      $html = "<div class='alert'>Opção de curtidas desabilitada</div>";
     } else {
       $html = "";
     }
 
     $s = $totalLikes != 1 ? 's' : '';
 
-    $html .= "<span class='cursowp_like_count' data-post_id='{$post_id}' >$totalLikes curtida$s</span>";
+    if($podeCurtir == true) {
+      $html .= "<span class='cursowp_like_count' data-post_id='{$post_id}' >$totalLikes curtida$s</span>";
+    } else {
+      $html .= "";
+    }
 
     $html = "<div class='cursowp_like_wrapper' id='cursowp_like_{$post_id}'>$html<hr/></div>";
 
@@ -145,3 +154,61 @@ add_action('init', function() {
 });
 
 
+// EXIBIR OPÇÃO PARA DESATIVAR/ATIVAS CURTIDAS
+function likes_meta_box_markup($object){
+  wp_nonce_field(basename(__FILE__), "meta-box-likes");
+
+  ?>
+  <div>
+    <label for="_can_like_checkbox">Permitir?</label>
+    <?php
+    $checkbox_value = get_post_meta($object->ID, "_can_like_checkbox", true);
+
+    if($checkbox_value == "") {
+      ?>
+      <input name="_can_like_checkbox" type="checkbox" value="true">
+      <?php
+    }
+    else if($checkbox_value == "true") {
+      ?>
+      <input name="_can_like_checkbox" type="checkbox" value="true" checked>
+      <?php
+    }
+    ?>
+  </div>
+  <?php
+
+}
+
+function add_likes_meta_box() {
+  add_meta_box("likes-meta-box", "Permissão de Curtidas", "likes_meta_box_markup", "post", "side", "high", null);
+}
+
+add_action("add_meta_boxes", "add_likes_meta_box");
+
+// SALVANDO OPÇÃO NO ADMIN
+function save_likes_meta_box($post_id, $post, $update) {
+  if (!isset($_POST["meta-box-likes"]) || !wp_verify_nonce($_POST["meta-box-likes"], basename(__FILE__)))
+    return $post_id;
+
+  if(!current_user_can("edit_post", $post_id))
+    return $post_id;
+
+  if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+    return $post_id;
+
+  $slug = "post";
+  if($slug != $post->post_type)
+    return $post_id;
+
+  $meta_box_checkbox_value = "";
+
+
+  if(isset($_POST["_can_like_checkbox"]))
+  {
+    $meta_box_checkbox_value = $_POST["_can_like_checkbox"];
+  }
+  update_post_meta($post_id, "_can_like_checkbox", $meta_box_checkbox_value);
+}
+
+add_action("save_post", "save_likes_meta_box", 10, 3);
