@@ -78,8 +78,17 @@ class CursoWPLikes {
 
         if (is_user_logged_in()) {
             $current_user = wp_get_current_user();
-            if (is_numeric($_POST['post_id'])) {
-                add_post_meta($_POST['post_id'], '_user_like', $current_user->ID);
+            if (is_numeric($post_id = $_POST['post_id'])) {
+
+                $current_user = wp_get_current_user();
+                $likes = get_post_meta($post_id, '_user_like');
+                $jaCurtiu = is_array($likes) ? in_array($current_user->ID, $likes) : false;
+                
+                if($jaCurtiu){
+                    delete_post_meta($_POST['post_id'], '_user_like', $current_user->ID);
+                } else {
+                    add_post_meta($_POST['post_id'], '_user_like', $current_user->ID);
+                }
                 echo $this->get_like_html($_POST['post_id']);
             } else {
                 echo 'erro';
