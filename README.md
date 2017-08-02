@@ -26,12 +26,12 @@ Para quem ainda é novo no Github, vale ver esse post sobre como fazer Fork, Pul
 
 ### Fáceis
 
-* Adicionar a possibilidade de Descurtir
-* Não permitir curtir os próprios posts
+* ~~Adicionar a possibilidade de Descurtir~~
+* ~~Não permitir curtir os próprios posts~~
 
 ### Médios
 
-* Colocar uma opção em cada post para habilitar se ele pode ser curtido ou não (igual vc habilita comentários ou não (usa metaboxes)
+* ~~Colocar uma opção em cada post para habilitar se ele pode ser curtido ou não (igual vc habilita comentários ou não (usa metaboxes)~~
 * Criar um Widget que liste os X posts mais votados, onde X é uma opção do Widget
 
 ### O mais legal
