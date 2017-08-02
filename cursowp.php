@@ -57,19 +57,24 @@ class CursoWPLikes {
         $likes = get_post_meta($post_id, '_user_like');
         $totalLikes = is_array($likes) ? sizeof($likes) : 0;
         $jaCurtiu = is_array($likes) ? in_array($current_user->ID, $likes) : false;
-        
-        if (!$jaCurtiu) {
-            $html = "<span class='cursowp_like' data-post_id='{$post_id}' >Curtir</span>";
+
+        global $post;
+        if($current_user->ID != $post->post_author) {
+            
+            if (!$jaCurtiu) {
+                $html = "<span class='cursowp_like' data-post_id='{$post_id}' >Curtir</span>";
+            } else {
+                $html = "<span class='cursowp_like' data-post_id='{$post_id}' >Descurtir</span>";
+            }
+            
+            $s = $totalLikes != 1 ? 's' : '';
+            
+            $html .= " | <span class='cursowp_like_count' data-post_id='{$post_id}' >$totalLikes curtida$s</span>";
+            
+            $html = "<div class='cursowp_like_wrapper' id='cursowp_like_{$post_id}'>$html<hr/></div>";
         } else {
-            $html = "<span  >Já curtiu</span>";
+            $html = "<strong>Você não pode curtir o próprio post</strong>";  
         }
-        
-        $s = $totalLikes != 1 ? 's' : '';
-        
-        $html .= " | <span class='cursowp_like_count' data-post_id='{$post_id}' >$totalLikes curtida$s</span>";
-        
-        $html = "<div class='cursowp_like_wrapper' id='cursowp_like_{$post_id}'>$html<hr/></div>";
-        
         return $html;
 
     }
@@ -78,8 +83,17 @@ class CursoWPLikes {
 
         if (is_user_logged_in()) {
             $current_user = wp_get_current_user();
-            if (is_numeric($_POST['post_id'])) {
-                add_post_meta($_POST['post_id'], '_user_like', $current_user->ID);
+            if (is_numeric($post_id = $_POST['post_id']) && $current_user->ID != $post->post_author) {
+
+                $current_user = wp_get_current_user();
+                $likes = get_post_meta($post_id, '_user_like');
+                $jaCurtiu = is_array($likes) ? in_array($current_user->ID, $likes) : false;
+                
+                if($jaCurtiu){
+                    delete_post_meta($_POST['post_id'], '_user_like', $current_user->ID);
+                } else {
+                    add_post_meta($_POST['post_id'], '_user_like', $current_user->ID);
+                }
                 echo $this->get_like_html($_POST['post_id']);
             } else {
                 echo 'erro';
@@ -89,9 +103,7 @@ class CursoWPLikes {
         die;
 
     }
-    
-    
-    
+        
     function register_settings() {
     
         register_setting('general', 'cursowp_like_enabled');
